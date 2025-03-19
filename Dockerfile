@@ -12,6 +12,8 @@ ENV ROS_DISTRO=${ROS_DISTRO}
 ENV ROS2_WS=/opt/ros2_ws
 ENV TURTLEBOT3_MODEL=burger
 ENV LDS_MODEL=LDS-01
+ENV OPENCR_MODEL=${TURTLEBOT3_MODEL}
+ENV OPENCR_PORT=/dev/ttyACM0
 
 RUN apt-get update && apt-get upgrade -y
 
@@ -23,6 +25,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-${ROS_DISTRO}-turtlebot3-msgs \
     ros-${ROS_DISTRO}-dynamixel-sdk \
     libudev-dev
+
+## Teleop
+RUN apt-get install -y --no-install-recommends \
+    ros-$ROS_DISTRO-teleop-twist-joy ros-$ROS_DISTRO-joy ros-$ROS_DISTRO-key-teleop
 
 ## Add required packages for opencr flash
 RUN dpkg --add-architecture armhf  
