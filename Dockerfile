@@ -2,10 +2,14 @@
 ## Local: docker run -it --rm --net=host -v /dev:/dev -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $PWD/src:/opt/ros2_ws/src --privileged turtlebot3_pi5:latest bash
 ## Headless: docker run -it --rm --net=host -v /dev:/dev -v $PWD/src:/opt/ros2_ws/src --privileged turtlebot3_pi5:latest bash
 
+ARG ROS_DISTRO=humble
+
 FROM ros:${ROS_DISTRO}-ros-base
 
+ARG ROS_DISTRO
+ENV ROS_DISTRO=${ROS_DISTRO}
+
 ENV ROS2_WS=/opt/ros2_ws
-ENV ROS_DISTRO=humble
 ENV TURTLEBOT3_MODEL=burger
 ENV LDS_MODEL=LDS-01
 
