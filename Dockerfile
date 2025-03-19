@@ -24,6 +24,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ros-${ROS_DISTRO}-dynamixel-sdk \
     libudev-dev
 
+## Add required packages for opencr flash
+RUN dpkg --add-architecture armhf  
+RUN apt-get update 
+RUN apt-get install -y --no-install-recommends libc6:armhf 
+
+## BUILD WORKSPACE
 # Copy ROS packages for compilation in container
 COPY ./src $ROS2_WS/src
 
@@ -37,11 +43,6 @@ RUN /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash \
 
 # Remove src folder used for compilation, since the real src folder will be mounted at runtime
 RUN rm -rf $ROS2_WS/src
-
-## Add required packages for opencr flash
-RUN dpkg --add-architecture armhf  
-RUN apt-get update 
-RUN apt-get install -y --no-install-recommends libc6:armhf 
 
 # Cleanup
 RUN rm -rf /var/lib/apt/lists/*
