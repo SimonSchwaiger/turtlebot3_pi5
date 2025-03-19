@@ -1,0 +1,14 @@
+## Headless: docker run -it --rm --net=host -v /dev:/dev -v $PWD/src:/opt/ros2_ws/src --privileged turtlebot3_pi5:latest bash
+
+services:
+
+  bringup:
+    image: turtlebot3_pi5
+    build:
+      context: .
+    network_mode: host
+    volumes:
+      - /dev:/dev
+      - $PWD/src:/opt/ros2_ws/src
+    privileged: true
+    command: ros2 launch turtlebot3_bringup robot.launch.py
