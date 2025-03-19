@@ -27,7 +27,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ## Add required packages for opencr flash
 RUN dpkg --add-architecture armhf  
 RUN apt-get update 
-RUN apt-get install -y --no-install-recommends libc6:armhf 
+RUN apt-get install -y --no-install-recommends libc6:armhf
+# Install usbutils for device debugging
+RUN apt-get install -y --no-install-recommends usbutils
 
 ## BUILD WORKSPACE
 # Copy ROS packages for compilation in container
