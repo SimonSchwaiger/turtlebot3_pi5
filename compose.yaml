@@ -7,8 +7,41 @@ services:
     build:
       context: .
     network_mode: host
+    ipc: host
     volumes:
       - /dev:/dev
       - $PWD/src:/opt/ros2_ws/src
+      #- $PWD/FASTRTPS_DISABLE_SHARED_MEM.xml:/FASTRTPS_DISABLE_SHARED_MEM.xml
+      - /dev/shm:/dev/shm
+    environment:
+      - ROS_LOCALHOST_ONLY=0
+      - ROS_DOMAIN_ID=30
+      - RMW_LOG_LEVEL=debug
+      #- FASTRTPS_DEFAULT_PROFILES_FILE=/FASTRTPS_DISABLE_SHARED_MEM.xml
     privileged: true
     command: ros2 launch turtlebot3_bringup robot.launch.py
+
+  rosbridge:
+    image: web_teleop
+    build:
+      context: $PWD/web_teleop
+    network_mode: host
+    ipc: host
+    privileged: true
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      - ROS_LOCALHOST_ONLY=0
+      - ROS_DOMAIN_ID=30
+      - RMW_LOG_LEVEL=debug
+    command: ros2 launch rosbridge_server rosbridge_websocket_launch.xml
+
+  web_teleop:
+    image: web_teleop
+    build:
+      context: $PWD/web_teleop
+    network_mode: host
+    volumes:
+      - $PWD/web_teleop/app:/app
+    privileged: true
+    command: python3 /app/teleop_flet_ui.py
