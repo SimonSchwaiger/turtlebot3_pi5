@@ -30,10 +30,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN apt-get install -y --no-install-recommends \
     ros-$ROS_DISTRO-teleop-twist-joy ros-$ROS_DISTRO-joy ros-$ROS_DISTRO-key-teleop
 
-## Add required packages for opencr flash
-RUN dpkg --add-architecture armhf  
-RUN apt-get update 
-RUN apt-get install -y --no-install-recommends libc6:armhf
+## Add required packages for opencr flash -> Uncomment if you want to flash the OpenCR board
+# RUN dpkg --add-architecture armhf  
+# RUN apt-get update 
+# RUN apt-get install -y --no-install-recommends libc6:armhf
 # Install usbutils for device debugging
 RUN apt-get install -y --no-install-recommends usbutils
 
@@ -60,9 +60,9 @@ RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc
 RUN echo "source $ROS2_WS/install/local_setup.bash" >> ~/.bashrc
 
 #TB3 Config
-RUN echo "export TURTLEBOT3_MODEL=$TURTLEBOT3_MODEL" >> ~/.bashrc
-RUN echo "export LDS_MODEL=$LDS_MODEL" >> ~/.bashrc
-RUN echo "export ROS_DOMAIN_ID=30 #TURTLEBOT3" >> ~/.bashrc
+#RUN echo "export TURTLEBOT3_MODEL=$TURTLEBOT3_MODEL" >> ~/.bashrc
+#RUN echo "export LDS_MODEL=$LDS_MODEL" >> ~/.bashrc
+#RUN echo "export ROS_DOMAIN_ID=30 #TURTLEBOT3" >> ~/.bashrc
 
 # Set shell env variable for jupyterlab (this fixes autocompletion in web-based shell)
 ENV SHELL=/bin/bash
