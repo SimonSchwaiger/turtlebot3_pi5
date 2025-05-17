@@ -1,6 +1,12 @@
 ## Headless: docker run -it --rm --net=host -v /dev:/dev -v $PWD/src:/opt/ros2_ws/src --privileged turtlebot3_pi5:latest bash
 
 services:
+  discovery_server:
+    image: turtlebot3_pi5
+    build:
+      context: .
+    network_mode: host
+    command: fastdds discovery --server-id 0
 
   bringup:
     image: turtlebot3_pi5
@@ -18,7 +24,10 @@ services:
       - ROS_DOMAIN_ID=30
       - RMW_LOG_LEVEL=debug
       - FASTRTPS_DEFAULT_PROFILES_FILE=/FASTRTPS_DISABLE_SHARED_MEM.xml
+      - ROS_DISCOVERY_SERVER=localhost:11811
     privileged: true
+    depends_on:
+      - discovery_server
     command: ros2 launch turtlebot3_bringup robot.launch.py
 
   rosbridge:
@@ -34,6 +43,9 @@ services:
       - ROS_LOCALHOST_ONLY=0
       - ROS_DOMAIN_ID=30
       - RMW_LOG_LEVEL=debug
+      - ROS_DISCOVERY_SERVER=localhost:11811
+    depends_on:
+      - discovery_server
     command: ros2 launch rosbridge_server rosbridge_websocket_launch.xml
 
   web_teleop:
