@@ -27,7 +27,7 @@
                         <locator>
                             <udpv4>
                                 <port>11811</port>
-                                <address>ros_discovery_server</address>
+                                <address>localhost</address>
                             </udpv4>
                         </locator>
                     </metatrafficUnicastLocatorList>
