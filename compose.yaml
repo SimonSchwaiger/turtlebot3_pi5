@@ -11,13 +11,13 @@ services:
     volumes:
       - /dev:/dev
       - $PWD/src:/opt/ros2_ws/src
-      #- $PWD/FASTRTPS_DISABLE_SHARED_MEM.xml:/FASTRTPS_DISABLE_SHARED_MEM.xml
+      - $PWD/FASTRTPS_DISABLE_SHARED_MEM.xml:/FASTRTPS_DISABLE_SHARED_MEM.xml
       - /dev/shm:/dev/shm
     environment:
       - ROS_LOCALHOST_ONLY=0
       - ROS_DOMAIN_ID=30
       - RMW_LOG_LEVEL=debug
-      #- FASTRTPS_DEFAULT_PROFILES_FILE=/FASTRTPS_DISABLE_SHARED_MEM.xml
+      - FASTRTPS_DEFAULT_PROFILES_FILE=/FASTRTPS_DISABLE_SHARED_MEM.xml
     privileged: true
     command: ros2 launch turtlebot3_bringup robot.launch.py
 
