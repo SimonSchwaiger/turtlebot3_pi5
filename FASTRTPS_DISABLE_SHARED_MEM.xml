@@ -1,37 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-    <profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles" >
-        <transport_descriptors>
-            <transport_descriptor>
-                <transport_id>CustomUdpTransport</transport_id>
-                <type>UDPv4</type>
-            </transport_descriptor>
-        </transport_descriptors>
+<profiles xmlns="http://www.eprosima.com">
+    <transport_descriptors>
+        <transport_descriptor>
+            <transport_id>CustomUDPTransport</transport_id>
+            <type>UDPv4</type>
+            <sendBufferSize>1000000</sendBufferSize>
+            <receiveBufferSize>1000000</receiveBufferSize>
+            <non_blocking_send>true</non_blocking_send>
+        </transport_descriptor>
+    </transport_descriptors>
 
-        <participant profile_name="participant_profile" is_default_profile="true">
-            <rtps>
-                <userTransports>
-                    <transport_id>CustomUdpTransport</transport_id>
-                </userTransports>
-
-                <useBuiltinTransports>false</useBuiltinTransports>
-                
-                <builtin>
-                    <discovery_config>
-                        <ignoreParticipantFlags>FILTER_DIFFERENT_PROCESS | FILTER_DIFFERENT_HOST</ignoreParticipantFlags>
-                        <leaseAnnouncement>
-                            <sec>1</sec>
-                            <nanosec>0</nanosec>
-                        </leaseAnnouncement>
-                    </discovery_config>
-                    <metatrafficUnicastLocatorList>
-                        <locator>
-                            <udpv4>
-                                <port>11811</port>
-                                <address>localhost</address>
-                            </udpv4>
-                        </locator>
-                    </metatrafficUnicastLocatorList>
-                </builtin>
-            </rtps>
-        </participant>
-    </profiles>
+    <participant profile_name="participant_profile_ros2" is_default_profile="true">
+        <rtps>
+            <useBuiltinTransports>false</useBuiltinTransports>
+            <userTransports>
+                <transport_id>CustomUDPTransport</transport_id>
+            </userTransports>
+        </rtps>
+    </participant>
+</profiles>
